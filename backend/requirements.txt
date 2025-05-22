@@ -1,0 +1,10 @@
+fastapi==0.104.1         # last release using Pydantic v1
+pydantic==1.10.15        # pin v1 explicitly
+sqlmodel==0.0.16         # compatible with v1 / FastAPI<=0.104
+
+uvicorn[standard]
+python-dotenv
+ultralytics==8.3.1
+opencv-python-headless
+numpy
+requests

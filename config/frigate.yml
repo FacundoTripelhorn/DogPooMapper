@@ -1,0 +1,25 @@
+mqtt:
+  enabled: false  # Disable MQTT for this home‑project unless you need it
+
+cameras:
+  garden_cam:
+    ffmpeg:
+      inputs:
+        - path: rtsp://${CAM_USERNAME}:${CAM_PASSWORD}@${CAM_IP}:554/Streaming/Channels/101
+          roles: [detect]
+    detect:
+      width: 1920      # Adjust to your stream resolution
+      height: 1080
+      fps: 5           # Lower FPS to save CPU/GPU
+    objects:
+      track:
+        - dog          # Frigate default object class for dogs
+      filters:
+        dog:
+          threshold: 0.6  # Confidence required to log detection
+
+# Optional: hardware acceleration examples (Intel Quick Sync / Nvidia / Coral)
+# detectors:
+#   coral:
+#     type: edgetpu
+#     device: usb

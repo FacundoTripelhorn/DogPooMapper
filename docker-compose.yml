@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  frigate:
+    image: ghcr.io/blakeblackshear/frigate:0.13.2
+    container_name: frigate
+    privileged: true
+    shm_size: "64M"
+    volumes:
+      - ./config/frigate.yml:/config/config.yml
+      - ./media:/media/frigate
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      - frigate
