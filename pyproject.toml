@@ -1,0 +1,13 @@
+# pyproject.toml  – adds npm-style task aliases via Poe the Poet
+[build-system]
+requires = ["setuptools"]          # we’re not packaging yet; this is enough
+build-backend = "setuptools.build_meta"
+
+[tool.poe.tasks]                   # ─── scripts start here ───
+serve      = "uvicorn backend.app.main:app --reload"              # dev API
+stack-up   = "docker compose up -d"                               # start stack
+stack-down = "docker compose down"
+train      = "yolo task=detect mode=train model=yolov8n.pt data='C:/Users/FacundoTripelhorn/Downloads/Dogs-shitting.v1i.yolov5pytorch/data.yaml' epochs=50 imgsz=640"                       # model train
+bridge     = "python scripts/mqtt_bridge.py --mqtt mqtt://localhost --api http://localhost:8000"
+homography = "python scripts/homography_calc.py ./media/snap.jpg" # create homography.npy
+export     = "python scripts/export_roboflow.py --api-key $ROBOFLOW_API_KEY --workspace myws --project dogpoop"
