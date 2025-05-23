@@ -5,18 +5,29 @@ cameras:
   garden_cam:
     ffmpeg:
       inputs:
-        - path: rtsp://${CAM_USERNAME}:${CAM_PASSWORD}@${CAM_IP}:554/Streaming/Channels/101
+        - path: rtsp://{FRIGATE_CAM_USERNAME}:{FRIGATE_CAM_PASSWORD}@{FRIGATE_CAM_IP}:554/Streaming/Channels/101
           roles: [detect]
+
     detect:
-      width: 1920      # Adjust to your stream resolution
+      width: 1920
       height: 1080
-      fps: 5           # Lower FPS to save CPU/GPU
-    objects:
-      track:
-        - dog          # Frigate default object class for dogs
-      filters:
-        dog:
-          threshold: 0.6  # Confidence required to log detection
+      fps: 8
+
+    record:
+      enabled: true
+      retain:
+        days: 3
+        mode: all
+      events:
+        retain:
+          default: 30
+
+    snapshots:
+      enabled: true
+      bounding_box: false
+      retain:
+        default: 3
+
 
 # Optional: hardware acceleration examples (Intel Quick Sync / Nvidia / Coral)
 # detectors:
